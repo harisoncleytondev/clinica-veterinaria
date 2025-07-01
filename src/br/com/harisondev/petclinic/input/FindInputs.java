@@ -55,7 +55,7 @@ public class FindInputs {
 	//Procurar todos os pets de um cliente pelo cpf
 	public void findPets() {
 		String cpf;
-		cpf = console.messageFormat(false, "Buscando cliente", "Informe o CPF do cliente.");
+		cpf = console.messageFormat(false, false, "Buscando cliente", "Informe o CPF do cliente.");
 
 		ArrayList<UserAnimalType> list = UserStorage.getAnimalsFromCpf(cpf);
 		if (list == null) {
@@ -90,7 +90,7 @@ public class FindInputs {
 	public void findClient() {
 		String cpf;
 
-		cpf = console.messageFormat(false, "Buscando cliente", "Informe o CPF do cliente.");
+		cpf = console.messageFormat(false, false, "Buscando cliente", "Informe o CPF do cliente.");
 		User user = UserStorage.getUserFromCpf(cpf, UserTypes.CLIENT);
 
 		if (user == null) {
@@ -162,7 +162,7 @@ public class FindInputs {
 	//Pegar consulta pelo CPF
 	public void findConsultations() {
 		String cpf;
-		cpf = console.messageFormat(false, "Pesquisando por consultas", "Qual o CPF que deseja pesquisar?");
+		cpf = console.messageFormat(false, false, "Pesquisando por consultas", "Qual o CPF que deseja pesquisar?");
 
 		System.out.println("---------------------------------------");
 
@@ -213,6 +213,16 @@ public class FindInputs {
 			if (user != null && user.getType().equals(UserTypes.CLIENT)) {
 				filter.add(user);
 			}
+		}
+		
+		if (filter.size() == 0) {
+			System.out.println("---------------------------------------");
+			System.out.println("Nenhum cliente cadastrado.");
+			System.out.println("Pressione [Enter] para continuar.");
+			System.out.println();
+			console.scanner.nextLine();
+			console.start();
+			return;
 		}
 		
 		int index = 0;

@@ -22,7 +22,7 @@ public class EditInputs {
 
 		String cpf, newCpf, newName;
 
-		cpf = console.messageFormat(false, "Editando uma conta", "Informe o CPF da conta que deseja editar");
+		cpf = console.messageFormat(false, false, "Editando uma conta", "Informe o CPF da conta que deseja editar");
 
 		// pega o usuario pelo cpf independente de ser veterinario ou cliente
 		User oldUser = null;
@@ -42,11 +42,11 @@ public class EditInputs {
 			return;
 		}
 
-		newCpf = console.messageFormat(true, "Editando uma conta", "Novo CPF (Pressione [Enter] para não alterar)");
+		newCpf = console.messageFormat(true, false, "Editando uma conta", "Novo CPF (Pressione [Enter] para não alterar)");
 		if (newCpf.equals("")) {
 			newCpf = oldUser.getCpf();
 		}
-		newName = console.messageFormat(true, "Editando uma conta", "Novo nome (Pressione [Enter] para não alterar)");
+		newName = console.messageFormat(true, false, "Editando uma conta", "Novo nome (Pressione [Enter] para não alterar)");
 		if (newName.equals("")) {
 			newName = oldUser.getName();
 		}
@@ -95,7 +95,7 @@ public class EditInputs {
 	public void changePet() {
 		String cpf, oldName, name, disease, species, height, age;
 
-		cpf = console.messageFormat(false, "Editando um PET", "Informe o CPF do dono do PET que deseja editar");
+		cpf = console.messageFormat(false, false, "Editando um PET", "Informe o CPF do dono do PET que deseja editar");
 		User client = UserStorage.getUserFromCpf(cpf, UserTypes.CLIENT);
 
 		if (client == null) {
@@ -107,7 +107,7 @@ public class EditInputs {
 			return;
 		}
 
-		oldName = console.messageFormat(false, "Editando um PET", "Informe o nome do PET que deseja editar");
+		oldName = console.messageFormat(false, false, "Editando um PET", "Informe o nome do PET que deseja editar");
 		UserAnimalType animal = UserStorage.getAnimalFromName(cpf, oldName);
 
 		if (animal == null) {
@@ -119,28 +119,28 @@ public class EditInputs {
 			return;
 		}
 
-		name = console.messageFormat(true, "Editando um PET", "Novo nome (Pressione [Enter] para não alterar)");
+		name = console.messageFormat(true, false, "Editando um PET", "Novo nome (Pressione [Enter] para não alterar)");
 		if (name.equals("")) {
 			name = animal.getName();
 		}
 
-		disease = console.messageFormat(true, "Editando um PET", "Nova doença (Pressione [Enter] para não alterar)");
+		disease = console.messageFormat(true, false, "Editando um PET", "Nova doença (Pressione [Enter] para não alterar)");
 		if (disease.equals("")) {
 			disease = animal.getDisease();
 		}
 
-		species = console.messageFormat(true, "Editando um PET", "Nova espécie (Pressione [Enter] para não alterar)");
+		species = console.messageFormat(true, false, "Editando um PET", "Nova espécie (Pressione [Enter] para não alterar)");
 		if (species.equals("")) {
 			species = animal.getSpecies();
 		}
 
-		height = console.messageFormat(true, "Editando um PET",
+		height = console.messageFormat(true, true, "Editando um PET",
 				"Novo tamanho [Em metros] (Pressione [Enter] para não alterar)");
 		if (height.equals("")) {
 			height = String.valueOf(animal.getHeight());
 		}
 
-		age = console.messageFormat(true, "Editando um PET", "Nova idade (Pressione [Enter] para não alterar)");
+		age = console.messageFormat(true, true, "Editando um PET", "Nova idade (Pressione [Enter] para não alterar)");
 		if (age.equals("")) {
 			age = String.valueOf(animal.getAge());
 		}
@@ -180,7 +180,7 @@ public class EditInputs {
 	public void changeConsult() {
 		String id, cpfClient, cpfVeterinary, namePet, diagnostic;
 
-		id = console.messageFormat(false, "Editando uma consulta",
+		id = console.messageFormat(false, true, "Editando uma consulta",
 				"Digite o ID da consulta (caso não saiba, use a busca para encontrá-lo).");
 
 		Consultation consult = ConsultationStorage.getConsultationFromId(id);
@@ -194,7 +194,7 @@ public class EditInputs {
 			return;
 		}
 
-		cpfClient = console.messageFormat(true, "Editando uma consulta",
+		cpfClient = console.messageFormat(true, false, "Editando uma consulta",
 				"Novo CPF do cliente (Pressione [Enter] para não alterar");
 		if (cpfClient.equals("")) {
 			cpfClient = consult.getCpfClient();
@@ -209,7 +209,7 @@ public class EditInputs {
 			return;
 		}
 
-		cpfVeterinary = console.messageFormat(true, "Editando uma consulta",
+		cpfVeterinary = console.messageFormat(true, false, "Editando uma consulta",
 				"Novo CPF do veterinário (Pressione [Enter] para não alterar");
 		if (cpfVeterinary.equals("")) {
 			cpfVeterinary = consult.getCpfVeterinary();
@@ -224,13 +224,13 @@ public class EditInputs {
 			return;
 		}
 
-		namePet = console.messageFormat(true, "Editando uma consulta",
+		namePet = console.messageFormat(true, false, "Editando uma consulta",
 				"Novo nome para o PET (Pressione [Enter] para não alterar");
 		if (namePet.equals("")) {
 			namePet = consult.getNamePet();
 		}
 
-		diagnostic = console.messageFormat(true, "Editando uma consulta",
+		diagnostic = console.messageFormat(true, false, "Editando uma consulta",
 				"Novo diagnóstico (Pressione [Enter] para não alterar");
 		if (diagnostic.equals("")) {
 			diagnostic = consult.getDiagnostic();

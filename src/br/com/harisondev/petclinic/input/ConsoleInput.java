@@ -4,7 +4,6 @@ import java.util.Scanner;
 
 public class ConsoleInput {
 
-	private int zero = 0;
 	public Scanner scanner = new Scanner(System.in);
 	private FindInputs find;
 	private RegisterInputs register;
@@ -227,7 +226,7 @@ public class ConsoleInput {
 		}
 	}
 
-	public String messageFormat(Boolean empty, String header, String content) {
+	public String messageFormat(Boolean empty, boolean number, String header, String content) {
 		String input = "";
 
 		while (true) {
@@ -237,19 +236,36 @@ public class ConsoleInput {
 			System.out.println(content);
 			System.out.println();
 			System.out.println("Cancelar [0]");
-			input = scanner.nextLine();
 
-			if (input.equals("0")) {
-				start();
-				return null;
-			} else if (!empty && input.equals("")) {
-				System.out.println("---------------------------------------");
-				System.out.println("Você precisa digitar algo.");
-				System.out.println("Pressione [Enter] para continuar.");
-				scanner.nextLine();
+			if (number) {
+				try {
+					String value = scanner.nextLine();
+					double num = Double.parseDouble(value);
+					input = String.valueOf(num);
+					return input;
+				} catch (Exception e) {
+					System.out.println("---------------------------------------");
+					System.out.println("Você precisa digitar um número.");
+					System.out.println("Pressione [Enter] para continuar.");
+					scanner.nextLine();
+				}
+				
 			} else {
-				return input;
+				input = scanner.nextLine();
+
+				if (input.equals("0")) {
+					start();
+					return null;
+				} else if (!empty && input.equals("")) {
+					System.out.println("---------------------------------------");
+					System.out.println("Você precisa digitar algo.");
+					System.out.println("Pressione [Enter] para continuar.");
+					scanner.nextLine();
+				} else {
+					return input;
+				}
 			}
+
 		}
 	}
 

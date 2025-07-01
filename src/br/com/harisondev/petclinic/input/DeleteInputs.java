@@ -18,7 +18,7 @@ public class DeleteInputs {
 	public void deleteConsult() {
 		String id;
 
-		id = console.messageFormat(false, "Deletando uma consulta",
+		id = console.messageFormat(false, true, "Deletando uma consulta",
 				"Digite o ID da consulta (caso não saiba, use a busca para encontrá-lo).");
 
 		Boolean consult = ConsultationStorage.deleteConsultation(id);
@@ -45,7 +45,7 @@ public class DeleteInputs {
 		String cpf;
 		// Caso client seja true o tipo da conta é cliente se não veterinario
 
-		cpf = console.messageFormat(false, "Deletando uma conta", "Digite o CPF da conta.");
+		cpf = console.messageFormat(false, false, "Deletando uma conta", "Digite o CPF da conta.");
 
 		Boolean user = UserStorage.deleteUser(cpf);
 
@@ -69,7 +69,7 @@ public class DeleteInputs {
 	public void deletePet() {
 		String cpf, name;
 		
-		cpf = console.messageFormat(false, "Deletando um PET", "Digite o CPF da conta.");
+		cpf = console.messageFormat(false, false, "Deletando um PET", "Digite o CPF da conta.");
 		User user = UserStorage.getUserFromCpf(cpf, UserTypes.CLIENT);
 		
 		if (user == null) {
@@ -81,7 +81,7 @@ public class DeleteInputs {
 			return;
 		}
 		
-		name = console.messageFormat(false, "Deletando um PET", "Digite nome nome do PET.");
+		name = console.messageFormat(false, false, "Deletando um PET", "Digite nome nome do PET.");
 		UserAnimalType animal = UserStorage.getAnimalFromName(cpf, name);
 		
 		if (animal == null) {

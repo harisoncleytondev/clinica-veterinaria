@@ -21,10 +21,19 @@ public class RegisterInputs {
     public void registerVeterinary() {
         String name, cpf;
 
-        name = console.messageFormat(false, "Cadastrando um Veterinário", "Qual é o nome do(a) doutor(a)?");
+        name = console.messageFormat(false, false, "Cadastrando um Veterinário", "Qual é o nome do(a) doutor(a)?");
 
-        cpf = console.messageFormat(false, "Cadastrando um Veterinário", "Qual é o CPF do(a) doutor(a)?");
+        cpf = console.messageFormat(false, false, "Cadastrando um Veterinário", "Qual é o CPF do(a) doutor(a)?");
 
+        if (UserStorage.getUserFromCpf(cpf, UserTypes.CLIENT) != null || UserStorage.getUserFromCpf(cpf, UserTypes.VETERINARY) != null) {
+        	System.out.println("---------------------------------------");
+        	System.out.println("Já existe uma conta com esse CPF.");
+            System.out.println("Pressione [Enter] para continuar.");
+            console.scanner.nextLine();
+            console.start();
+        	return;
+        }
+        
         System.out.println("---------------------------------------");
         System.out.println("Veterinário:");
         System.out.println("Nome: " + name);
@@ -40,13 +49,9 @@ public class RegisterInputs {
             return;
         } else {
             System.out.println("Salvando...");
-            if (UserStorage.getUserFromCpf(cpf, UserTypes.VETERINARY) == null) {
-                UserStorage.createUser(name, cpf, UserTypes.VETERINARY);
+            UserStorage.createUser(name, cpf, UserTypes.VETERINARY);
 
-                System.out.println("Salvo com sucesso.");
-            } else {
-                System.out.println("Já existe um veterinário cadastrado com esse CPF.");
-            }
+            System.out.println("Salvo com sucesso.");
             return;
         }
     }
@@ -59,25 +64,34 @@ public class RegisterInputs {
         String namePet, disease, species, height, age;
 
         // Definindo nome do responsavel.
-        nameOwner = console.messageFormat(false, "Cadastrando um Paciente", "Qual é o nome do(a) responsável pelo PET?");
+        nameOwner = console.messageFormat(false, false, "Cadastrando um Paciente", "Qual é o nome do(a) responsável pelo PET?");
 
         // Definindo cpf do responsavel
-        cpf = console.messageFormat(false, "Cadastrando um Paciente", "Qual é o CPF do(a) responsável pelo PET?");
+        cpf = console.messageFormat(false, false, "Cadastrando um Paciente", "Qual é o CPF do(a) responsável pelo PET?");
 
+        if (UserStorage.getUserFromCpf(cpf, UserTypes.CLIENT) != null || UserStorage.getUserFromCpf(cpf, UserTypes.VETERINARY) != null) {
+        	System.out.println("---------------------------------------");
+        	System.out.println("Já existe uma conta com esse CPF.");
+            System.out.println("Pressione [Enter] para continuar.");
+            console.scanner.nextLine();
+            console.start();
+        	return;
+        }
+        
         // Definindo nome do PET
-        namePet = console.messageFormat(false, "Cadastrando um Paciente", "Qual é o nome do PET?");
+        namePet = console.messageFormat(false, false, "Cadastrando um Paciente", "Qual é o nome do PET?");
 
         // Definindo Doença
-        disease = console.messageFormat(false, "Cadastrando um Paciente", "Quais sintomas o PET está sentindo?");
+        disease = console.messageFormat(false, false, "Cadastrando um Paciente", "Quais sintomas o PET está sentindo?");
 
         // Definindo Especie
-        species = console.messageFormat(false, "Cadastrando um Paciente", "Por favor, informe a espécie do PET.");
+        species = console.messageFormat(false, false, "Cadastrando um Paciente", "Por favor, informe a espécie do PET.");
 
         // Definindo Especie
-        height = console.messageFormat(false, "Cadastrando um Paciente", "Qual é o tamanho do PET (em metros)?");
+        height = console.messageFormat(false, true, "Cadastrando um Paciente", "Qual é o tamanho do PET (em metros)?");
 
         // Definindo Idade
-        age = console.messageFormat(false, "Cadastrando um Paciente", "Qual a idade do PET?");
+        age = console.messageFormat(false, true, "Cadastrando um Paciente", "Qual a idade do PET?");
 
         System.out.println("---------------------------------------");
         System.out.println("Responsável:");
@@ -105,7 +119,7 @@ public class RegisterInputs {
                 UserStorage.createUser(nameOwner, cpf, UserTypes.CLIENT);
             }
 
-            UserStorage.createAnimal(namePet, cpf, disease, species, Double.parseDouble(height), Integer.parseInt(age));
+            UserStorage.createAnimal(namePet, cpf, disease, species, Double.parseDouble(height), (int) Double.parseDouble(age));
             System.out.println("Salvo com sucesso.");
             return;
         }
@@ -117,10 +131,10 @@ public class RegisterInputs {
         String cpfClient, cpfVeterinary, namePet, diagnostic;
 
         // Definindo CPF do cliente
-        cpfClient = console.messageFormat(false, "Criando uma consulta", "Para prosseguir, qual o CPF do cliente?");
+        cpfClient = console.messageFormat(false, false, "Criando uma consulta", "Para prosseguir, qual o CPF do cliente?");
 
         // Definindo CPF do veterinário
-        cpfVeterinary = console.messageFormat(false, "Criando uma consulta", "Para prosseguir, qual o CPF do veterinário?");
+        cpfVeterinary = console.messageFormat(false, false, "Criando uma consulta", "Para prosseguir, qual o CPF do veterinário?");
 
         User client = UserStorage.getUserFromCpf(cpfClient, UserTypes.CLIENT);
         User veterinary = UserStorage.getUserFromCpf(cpfVeterinary, UserTypes.VETERINARY);
@@ -137,7 +151,7 @@ public class RegisterInputs {
         UserAnimalType animal = null;
 
         while (animal == null) {
-            namePet = console.messageFormat(false, "Criando uma consulta", "Para prosseguir, qual o nome do pet?");
+            namePet = console.messageFormat(false, false, "Criando uma consulta", "Para prosseguir, qual o nome do pet?");
 
             for (User user : UserStorage.users) {
                 if (user.getName().equals(namePet)) {
@@ -154,7 +168,7 @@ public class RegisterInputs {
             }
         }
 
-        diagnostic = console.messageFormat(false, "Criando uma consulta", "Para prosseguir, qual o diagnostico do pet?");
+        diagnostic = console.messageFormat(false, false, "Criando uma consulta", "Para prosseguir, qual o diagnostico do pet?");
 
         System.out.println("---------------------------------------");
         System.out.println("Consulta:");
